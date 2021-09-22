@@ -1,0 +1,49 @@
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+ 
+
+public class SystemInfo {
+ 
+    public static void main(String[] args) 
+    {
+        System.out.println("Host IP   : "+getIPAddress());
+        System.out.println("Host Address : "+getMAC());
+    }
+    private static String getIPAddress(){
+         try{
+            InetAddress inetaddress=InetAddress.getLocalHost();  
+            String ip = inetaddress.getHostAddress();  
+            return ip;   
+        }
+        catch(Exception E){
+            E.printStackTrace(); 
+            return null;
+        }
+         
+    }
+     
+   
+    private static String getMAC(){
+         try{
+            InetAddress inetaddress=InetAddress.getLocalHost(); 
+             
+            
+            NetworkInterface network = NetworkInterface.getByInetAddress(inetaddress); 
+            byte[] macArray = network.getHardwareAddress();  
+            StringBuilder str = new StringBuilder();
+             
+            
+            for (int i = 0; i < macArray.length; i++) {
+                    str.append(String.format("%02X%s", macArray[i], (i < macArray.length - 1) ? "-" : ""));
+            }
+            String macAddress=str.toString();
+         
+            return macAddress; //return MAc Address
+        }
+        catch(Exception E){
+            E.printStackTrace();  //print Exception StackTrace
+            return null;
+        } 
+    }
+     
+}
